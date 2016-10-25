@@ -33,7 +33,7 @@ def home():
 
     # Snapshot
     snapdate = datetime.datetime.fromtimestamp(os.path.getmtime(webapp.config['UPLOAD_FOLDER']+SNAPSHOT_NAME))
-    snapdate += timedelta(hours=2)
+    snapdate += datetime.timedelta(hours=2)
     data['image'] = {'updated': snapdate.strftime("%d/%m/%Y %H:%M:%S") }
 
     # SCK api
@@ -53,7 +53,7 @@ def home():
         else: key = None
         if key:
             sckdate = dateutil.parser.parse(req['last_reading_at'])
-            sckdate += timedelta(hours=2)
+            sckdate += datetime.timedelta(hours=2)
             data[key] = {'value': round(sensor['value'],2), 'updated': sckdate.strftime("%d/%m/%Y %H:%M:%S")}
 
     return dashboard.render(data)
