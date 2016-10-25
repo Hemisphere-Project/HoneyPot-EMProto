@@ -32,8 +32,9 @@ def home():
     data = {}
 
     # Snapshot
-    snapdate = os.path.getmtime(webapp.config['UPLOAD_FOLDER']+SNAPSHOT_NAME)
-    data['image'] = {'updated': datetime.datetime.fromtimestamp(snapdate).strftime("%d/%m/%Y %H:%M:%S") }
+    snapdate = datetime.datetime.fromtimestamp(os.path.getmtime(webapp.config['UPLOAD_FOLDER']+SNAPSHOT_NAME))
+    snapdate += timedelta(hours=2)
+    data['image'] = {'updated': snapdate.strftime("%d/%m/%Y %H:%M:%S") }
 
     # SCK api
     req = requests.get('https://api.smartcitizen.me/devices/3615').json()
@@ -51,7 +52,9 @@ def home():
         elif sensor['id'] == 14: key = 'light'
         else: key = None
         if key:
-            data[key] = {'value': round(sensor['value'],2), 'updated': dateutil.parser.parse(req['last_reading_at']).strftime("%d/%m/%Y %H:%M:%S")}
+            sckdate = dateutil.parser.parse(req['last_reading_at'])
+            sckdate += timedelta(hours=2)
+            data[key] = {'value': round(sensor['value'],2), 'updated': sckdate.strftime("%d/%m/%Y %H:%M:%S")}
 
     return dashboard.render(data)
 
