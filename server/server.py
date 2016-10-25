@@ -9,7 +9,7 @@ webapp = Flask(__name__)
 
 # Dashboard Template
 from jinja2 import Environment, PackageLoader
-jinja_env = Environment(loader=PackageLoader('main', 'views'))
+jinja_env = Environment(loader=PackageLoader('server', 'views'))
 
 @webapp.route("/")
 def home():
