@@ -37,7 +37,7 @@ def home():
     data['image'] = {'updated': snapdate.strftime("%d/%m/%Y %H:%M:%S") }
 
     # SCK api
-    req = requests.get('https://api.smartcitizen.me/devices/3615').json()
+    req = requests.get('https://api.smartcitizen.me/devices/3723').json()
 
     data['sck_id'] = req['id']
     data['sck_name'] = req['name']
